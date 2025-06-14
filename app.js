@@ -72,7 +72,7 @@ app.use( (req, res) => {
     error: { status: 404 }
   });
 });
- 
+  
 // Global error handler
 app.use(errorHandler);
 

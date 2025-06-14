@@ -101,19 +101,27 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000, // Reduce timeout for faster feedback
-      socketTimeoutMS: 45000,
-    });
+    //const conn = await mongoose.connect(process.env.MONGODB_URI, {
+      //useNewUrlParser: true,
+      //useUnifiedTopology: true,
+      //serverSelectionTimeoutMS: 5000, // Reduce timeout for faster feedback
+     // socketTimeoutMS: 45000,
+      const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  tls: true,
+  tlsAllowInvalidCertificates: true,
+  tlsAllowInvalidHostnames: true,
+   ssl: true,
+});
+   // });
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('Database connection error:', error.message);
     process.exit(1);
   }
-};
+};  
 
 // Handle connection events
 mongoose.connection.on('disconnected', () => {
